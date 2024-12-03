@@ -11,12 +11,12 @@ function App() {
   const [items, setItems] = useState<Item[]>([])
 
   useEffect(() => {
-    fetchItems()
+    fetchStocks()
   }, [])
 
-  const fetchItems = async () => {
+  const fetchStocks = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/items')
+      const response = await fetch('http://localhost:5001/api/stocks')
       const data = await response.json()
       setItems(data)
     } catch (error) {
@@ -26,7 +26,7 @@ function App() {
 
   const addItem = async (name: string) => {
     try {
-      const response = await fetch('http://localhost:5000/api/items', {
+      const response = await fetch('http://localhost:5001/api/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

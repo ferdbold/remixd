@@ -1,40 +1,24 @@
 import express from 'express';
-import { MongoClient, ObjectId } from 'mongodb';
+import { get } from '@vercel/edge-config';
 import cors from 'cors';
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 app.use(cors());
 app.use(express.json());
 
-const uri = 'mongodb://localhost:27017';
-const client = new MongoClient(uri);
+const stocks = await get('stocks');
 
-async function connectToMongoDB() {
+app.get('/api/stocks', async (req, res) => {
 	try {
-		await client.connect();
-		console.log('Connected to MongoDB');
-	} catch (error) {
-		console.error('Error connecting to MongoDB:', error);
-	}
-}
-
-connectToMongoDB();
-
-const db = client.db('vite-react-app');
-const itemsCollection = db.collection('items');
-
-app.get('/api/items', async (req, res) => {
-	try {
-		const items = await itemsCollection.find().toArray();
-		res.json(items);
+		res.json(stocks);
 	} catch (error) {
 		res.status(500).json({ error: 'Error fetching items' });
 	}
 });
 
-app.post('/api/items', async (req, res) => {
+app.post('/api/stocks', async (req, res) => {
 	try {
 		const { name } = req.body;
 		const result = await itemsCollection.insertOne({ name });
