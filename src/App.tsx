@@ -41,10 +41,8 @@ function App() {
   }*/
 
   const chartOptions = {
-    chart: {
-      id: "basic-bar"
-    },
     xaxis: {
+      type: "time",
       categories: ["18:00", "18:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
     },
     stroke: {

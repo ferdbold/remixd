@@ -1,20 +1,20 @@
 import express from 'express';
-import { createClient } from '@vercel/edge-config';
+import { Redis } from '@upstash/redis';
 import cors from 'cors';
+import 'dotenv/config';
 
 const app = express();
 const port = 5001;
-
-const edge = createClient("https://edge-config.vercel.com/ecfg_ujrysgakrollwa1ihqqlvifvgdpv?token=7baf9476-97f2-447d-a25e-35b770a87ba7");
+const redis = Redis.fromEnv();
 
 app.use(cors());
 app.use(express.json());
 
-const stocks = await edge.get('stocks');
+let chart = await redis.json.get("chart");
 
 app.get('/api/stocks', async (req, res) => {
 	try {
-		res.json(stocks);
+		res.json(chart);
 	} catch (error) {
 		res.status(500).json({ error: 'Error fetching items' });
 	}
