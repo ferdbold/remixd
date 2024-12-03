@@ -1,10 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { Redis } from "@upstash/redis";
 import Chart from "react-apexcharts";
 
 interface Item {
   name: string;
   color: string;
   data: number[]
+}
+
+async function getStocks(): Promise<Item[]> {
+  const redis = new Redis({
+    url: "https://driven-kodiak-48598.upstash.io",
+    token: "Ab3WAAIjcDE1ZmQxZjZiNzBkZTY0YzYyYWY0OTZiZWY3OWI3ZDE1YXAxMA"
+  });
+  const chart = await redis.json.get<Item[]>("chart");
+  return chart!;
 }
 
 function App() {
@@ -16,9 +26,8 @@ function App() {
 
   const fetchStocks = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/stocks')
-      const data = await response.json()
-      setChartSeries(data)
+      const data = await getStocks();
+      setChartSeries(data);
     } catch (error) {
       console.error('Error fetching items:', error)
     }
