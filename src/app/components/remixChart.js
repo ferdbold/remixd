@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Chart from "react-apexcharts";
+import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Colors } from "chart.js";
+import { Line } from "react-chartjs-2";
 import { fetchStocks } from "../actions";
 
-export default function RemixChart() {
-  const [chartSeries, setChartSeries] = useState([]);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Colors);
+
+const RemixChart = () => {
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     refreshChart();
@@ -13,31 +16,20 @@ export default function RemixChart() {
 
   async function refreshChart() {
     let stocks = await fetchStocks();
-    setChartSeries(stocks);
+    setChartData(stocks);
   }
  
-  const chartOptions = {
-    stroke: {
-      curve: 'smooth'
-    },
-    legend: {
-      labels: {
-        colors: 'grey',
-      },
-      markers: {
-        size: 10,
-        strokeWidth: 0
-      }
-    }
+  const options = {
+    responsive: true,
   };
 
-  if (!chartSeries)
+  if (chartData.length === 0)
     return <></>;
 
-  return <Chart
-    options={chartOptions}
-    series={chartSeries}
-    type="line"
-    height="75%"
+  return <Line
+    data={chartData}
+    options={options}
+    height={350}
   />
 }
+export default RemixChart;

@@ -1,6 +1,6 @@
 import RemixChart from './components/remixChart';
 
-export default function Home() {
+const Home = () => {
   return (
     <main className={"flex flex-col min-h-screen bg-slate-900 text-lime-500 px-2"}>
       <header className={"my-4"}>
@@ -12,3 +12,4 @@ export default function Home() {
     </main>
   );
 }
+export default Home;
