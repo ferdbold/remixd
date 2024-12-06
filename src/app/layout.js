@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import "./globals.css";
+import "./globals.scss";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,7 +24,16 @@ const RootLayout = ({ children }) => {
       <link rel="icon" type="image/jpg" href="favicon.jpg"/>
     </head>
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+        <div className="absolute w-screen h-screen z-10 particle-container">
+          {[...Array(30)].map((e, i) =>
+            <div key={i} className="particles">
+              <span className="circle"></span>
+            </div>
+          )}
+        </div>
+        <div className="relative z-20">
+          {children}
+        </div>
       </body>
     </html>
   );
