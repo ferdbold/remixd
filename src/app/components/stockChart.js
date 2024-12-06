@@ -38,7 +38,7 @@ const StockChart = () => {
   let timeCursor = 1 + Math.max(0, Math.min(24, Math.floor((h - 17) * 6 + (m / 10))));
 
   if (d.getTime() < new Date("December 6, 2024 17:00:00").getTime())
-    timeCursor = 1;
+    timeCursor = 0;
 
   for (let i = 0; i < filteredData.datasets.length; ++i) {
     const maxValue = Math.min(timeCursor, filteredData.datasets[i].data.length);
