@@ -20,7 +20,10 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <head>
+      <link rel="icon" type="image/jpg" href="favicon.jpg"/>
+    </head>
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
