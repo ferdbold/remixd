@@ -16,6 +16,11 @@ const StockChart = () => {
     refreshChart();
   }, []);
 
+  const filteredData = structuredClone(chartData);
+  filteredData.datasets = selectedStock !== ""
+    ? chartData.datasets.filter(el => el.label === selectedStock)
+    : chartData.datasets;
+
   async function refreshChart() {
     let stocks = await fetchStocks();
     setChartData(stocks);
@@ -27,7 +32,7 @@ const StockChart = () => {
   return <div className="flex-1 flex flex-col w-full">
     <div className="w-full flex-1" ref={containerRef}>
       <ChartWrapper
-        data={chartData}
+        data={filteredData}
         width={containerRef.current !== null ? containerRef.current.offsetWidth : 100}
         height={containerRef.current !== null ? containerRef.current.offsetHeight : 100}
       />
@@ -36,7 +41,7 @@ const StockChart = () => {
         {chartData.datasets.map((entry) => {
           return <li key={entry.label}>
             <button
-              onClick={() => setSelectedStock(entry.label)}
+              onClick={() => selectedStock !== entry.label ? setSelectedStock(entry.label) : setSelectedStock('')}
               style={{ backgroundColor: entry.color }}
               className={`${selectedStock === entry.label ? 'text-white' : 'text-green-500'} px-3 py-0.5 rounded-md font-bold`}>
                 {entry.label}
@@ -54,7 +59,7 @@ const ChartWrapper = ({ data, width, height }) => {
     maintainAspectRatio: false,
     elements: {
       line: {
-        borderColor: (ctx) => ctx.dataset.backgroundColor,
+        borderColor: (ctx) => ctx.dataset.color,
         borderWidth: 5,
         tension: 0.7,
       },

@@ -2,8 +2,6 @@ import StockChart from "@/app/components/stockChart";
 import NewsTicker from "@/app/components/newsTicker";
 
 const Home = () => {
-  let tickerElements = ['première news', 'deuxième news', 'troisième news'];
-
   return (
     <div className={"flex flex-col h-screen bg-slate-900 text-lime-500"}>
       <header className={"my-4"}>
