@@ -18,19 +18,20 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => {
+  const showEgg = new Date().getTime() >= new Date("December 6, 2024 19:00:00").getTime();
   return (
     <html lang="en">
     <head>
       <link rel="icon" type="image/jpg" href="favicon.jpg"/>
     </head>
-    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="absolute w-screen h-screen z-10 particle-container">
+    <body className={`${geistSans.variable} ${geistMono.variable} bg-slate-900 antialiased max-w-screen max-h-screen`}>
+        {showEgg && <div className="absolute w-screen h-screen overflow-x-hidden overflow-y-hidden z-10 particle-container">
           {[...Array(30)].map((e, i) =>
             <div key={i} className="particles">
               <span className="circle"></span>
             </div>
           )}
-        </div>
+        </div>}
         <div className="relative z-20">
           {children}
         </div>

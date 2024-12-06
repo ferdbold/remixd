@@ -1,6 +1,8 @@
 import EggContent from "@/app/egg/[slug]/content";
 
 const Egg = ({ params }) =>
-	<EggContent slug={params.slug} />
+	<div className>
+		<EggContent slug={params.slug} />
+	</div>
 
 export default Egg;

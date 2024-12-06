@@ -35,7 +35,7 @@ $cream: #fff9e6;
 }
 //use a for loop to create a unique keyframe for each element
 //then apply randomized styles to them all
-@for $i from 1 through 31 {
+@for $i from 1 through 32 {
   @-webkit-keyframes particle-animation-#{$i} {
     0% {
       -webkit-transform:translate3d((random(110) * 1vw), (random(100) * 1vh), (random(400) * 1px)) rotate(random(90) + deg);
@@ -60,24 +60,24 @@ $cream: #fff9e6;
   //fade in and out
   @-webkit-keyframes fade-frames {
     0% { opacity: 0; }
-    25% { opacity: .25; }
-    100% { opacity: .5; }
-    75% { opacity: .25; }
+    25% { opacity: 0.25; }
+    100% { opacity: 0.5; }
+    75% { opacity: 0.25; }
     100% { opacity: 0; }
   }
   @keyframes fade-frames {
     0% { opacity: 0;}
-    25% { opacity: .25; }
-    100% { opacity: .5; }
-    75% { opacity: .25; }
+    25% { opacity: 0.25; }
+    100% { opacity: 0.5; }
+    75% { opacity: 0.25; }
     100% { opacity: 0; }
   }
 
   //apply keyframes to children of .particles - the circles
   //and make them a random size, color, and delay
-  .particles span:nth-child(#{$i}){
-    -webkit-animation: particle-animation-#{$i} 10s ease-in infinite, fade-frames 10s ease-in-out infinite;
-    animation: particle-animation-#{$i} 10s ease-in infinite, fade-frames 10s ease-in-out infinite;
+  .particles:nth-child(#{$i}) span {
+    -webkit-animation: particle-animation-#{$i} 40s ease-in infinite, fade-frames 40s ease-in-out infinite;
+    animation: particle-animation-#{$i} 40s ease-in infinite, fade-frames 40s ease-in-out infinite;
     $size: random(100) + 5 + px;
     height: $size;
     width: $size;
