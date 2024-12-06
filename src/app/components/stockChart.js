@@ -37,7 +37,8 @@ const StockChart = () => {
           return <li key={entry.label}>
             <button
               onClick={() => setSelectedStock(entry.label)}
-              className={`${selectedStock === entry.label ? 'bg-green-500 text-white' : 'bg-green-500/25 text-green-500'} relative z-100 px-3 py-0.5 rounded-md font-bold`}>
+              style={{ backgroundColor: entry.color }}
+              className={`${selectedStock === entry.label ? 'text-white' : 'text-green-500'} px-3 py-0.5 rounded-md font-bold`}>
                 {entry.label}
             </button>
           </li>
@@ -50,7 +51,18 @@ export default StockChart;
 const ChartWrapper = ({ data, width, height }) => {
   const options = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    elements: {
+      line: {
+        borderColor: (ctx) => ctx.dataset.backgroundColor,
+        borderWidth: 5,
+        tension: 0.7,
+      },
+      point: {
+        pointBackgroundColor: 'rgba(0, 0, 0, 0)',
+        pointBorderWidth: 0,
+      }
+    }
   };
 
   return <Line
