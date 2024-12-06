@@ -22,7 +22,7 @@ const StockChart = () => {
   }
 
   if (chartData.length === 0)
-    return <></>;
+    return <div className="flex-1"></div>;
 
   return <div className="flex-1 flex flex-col w-full">
     <div className="w-full flex-1" ref={containerRef}>
