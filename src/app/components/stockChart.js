@@ -3,11 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Colors } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { fetchStocks } from "../actions";
+import { fetchEggChartForSlug, fetchStocks } from "../actions";
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Colors);
 
-const StockChart = () => {
+const StockChart = ({ showNav = true, eggSlug = null }) => {
   const [chartData, setChartData] = useState([]);
   const [selectedStock, setSelectedStock] = useState("");
   const containerRef = useRef(null);
@@ -19,7 +19,9 @@ const StockChart = () => {
   const filteredData = structuredClone(chartData);
 
   async function refreshChart() {
-    let stocks = await fetchStocks();
+    let stocks = eggSlug !== null
+      ? await fetchEggChartForSlug(eggSlug)
+      : await fetchStocks();
     setChartData(stocks);
   }
 
@@ -40,6 +42,9 @@ const StockChart = () => {
   if (d.getTime() < new Date("December 6, 2024 17:00:00").getTime())
     timeCursor = 0;
 
+  if (eggSlug !== null)
+    timeCursor = 25;
+
   for (let i = 0; i < filteredData.datasets.length; ++i) {
     const maxValue = Math.min(timeCursor, filteredData.datasets[i].data.length);
     filteredData.datasets[i].data = filteredData.datasets[i].data.slice(0, maxValue);
@@ -53,31 +58,31 @@ const StockChart = () => {
         height={containerRef.current !== null ? containerRef.current.offsetHeight : 100}
       />
     </div>
-      <ul className="flex flex-row my-2 px-2 gap-2 overflow-x-scroll">
-        {chartData.datasets.map((entry) => {
-          return <li key={entry.label}>
-            <button
-              onClick={() => selectedStock !== entry.label ? setSelectedStock(entry.label) : setSelectedStock('')}
-              style={{ backgroundColor: entry.color }}
-              className={`${selectedStock === entry.label ? 'text-white' : 'text-green-500'} px-3 py-0.5 rounded-md font-bold`}>
-                {entry.label}
-            </button>
-          </li>
-        })}
-      </ul>
+    {showNav && <ul className="flex flex-row my-2 px-2 gap-2 overflow-x-scroll">
+      {chartData.datasets.map((entry) => {
+        return <li key={entry.label}>
+          <button
+            onClick={() => selectedStock !== entry.label ? setSelectedStock(entry.label) : setSelectedStock('')}
+            style={{ backgroundColor: entry.color }}
+            className={`${selectedStock === entry.label ? 'text-white' : 'text-green-500'} px-3 py-0.5 rounded-md font-bold`}>
+              {entry.label}
+          </button>
+        </li>
+      })}
+    </ul>}
   </div>
 }
 export default StockChart;
 
 const ChartWrapper = ({ data, width, height }) => {
   const options = {
+    cubicInterpolationMode: 'monotone',
     responsive: true,
     maintainAspectRatio: false,
     elements: {
       line: {
         borderColor: (ctx) => ctx.dataset.color,
         borderWidth: 5,
-        tension: 0.7,
       },
       point: {
         pointBackgroundColor: (ctx) => ctx.dataset.color,
