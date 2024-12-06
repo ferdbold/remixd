@@ -19,7 +19,7 @@ const NewsTicker = () => {
 	if (!content)
 		return <div className="h-8 bg-red-500"></div>;
 
-	return <div className="h-8 text-nowrap bg-red-500 text-white py-1 font-bold uppercase">
+	return <div className="h-8 text-nowrap bg-red-800 text-white py-1 font-bold uppercase">
 		<Ticker speed={10} mode={'smooth'} offset={"run-in"}>
 			{({ index }) => (
 				<>

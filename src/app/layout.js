@@ -1,16 +1,4 @@
-import localFont from "next/font/local";
 import "./globals.scss";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata = {
   title: "REMI.XD",
@@ -23,12 +11,17 @@ const RootLayout = ({ children }) => {
     <html lang="en">
     <head>
       <link rel="icon" type="image/jpg" href="favicon.jpg"/>
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet"/>
     </head>
-    <body className={`${geistSans.variable} ${geistMono.variable} bg-slate-900 antialiased max-w-screen max-h-screen`}>
-        {showEgg && <div className="absolute w-screen h-screen overflow-x-hidden overflow-y-hidden z-10 particle-container">
-          {[...Array(30)].map((e, i) =>
-            <div key={i} className="particles">
-              <span className="circle"></span>
+    <body className={`bg-green-300/25 font-serif antialiased max-w-screen max-h-screen`}>
+    {showEgg && <div className="absolute w-screen h-screen overflow-x-hidden overflow-y-hidden z-10 particle-container">
+      {[...Array(30)].map((e, i) =>
+          <div key={i} className="particles">
+            <span className="circle"></span>
             </div>
           )}
         </div>}

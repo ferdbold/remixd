@@ -6,6 +6,9 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      'serif': ['Spectral'],
+    },
     extend: {
       colors: {
         background: "var(--background)",
