@@ -17,9 +17,6 @@ const StockChart = () => {
   }, []);
 
   const filteredData = structuredClone(chartData);
-  filteredData.datasets = selectedStock !== ""
-    ? chartData.datasets.filter(el => el.label === selectedStock)
-    : chartData.datasets;
 
   async function refreshChart() {
     let stocks = await fetchStocks();
@@ -28,6 +25,25 @@ const StockChart = () => {
 
   if (chartData.length === 0)
     return <div className="flex-1"></div>;
+
+  // Filter by selected studio
+  filteredData.datasets = selectedStock !== ""
+    ? chartData.datasets.filter(el => el.label === selectedStock)
+    : chartData.datasets;
+
+  // Filter by time advancing
+  const d = new Date();
+  const h = d.getHours();
+  const m = d.getMinutes();
+  let timeCursor = 1 + Math.max(0, Math.min(24, Math.floor((h - 17) * 6 + (m / 10))));
+
+  if (d.getTime() < new Date("December 6, 2024 17:00:00").getTime())
+    timeCursor = 1;
+
+  for (let i = 0; i < filteredData.datasets.length; ++i) {
+    const maxValue = Math.min(timeCursor, filteredData.datasets[i].data.length);
+    filteredData.datasets[i].data = filteredData.datasets[i].data.slice(0, maxValue);
+  }
 
   return <div className="flex-1 flex flex-col w-full">
     <div className="w-full flex-1" ref={containerRef}>
@@ -64,8 +80,8 @@ const ChartWrapper = ({ data, width, height }) => {
         tension: 0.7,
       },
       point: {
-        pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-        pointBorderWidth: 0,
+        pointBackgroundColor: (ctx) => ctx.dataset.color,
+        radius: 2,
       }
     }
   };

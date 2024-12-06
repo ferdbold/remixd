@@ -13,7 +13,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "REMIXD",
+  title: "REMI.XD",
   description: "Real Equity Maximum Income eXchange Department",
 };
 
