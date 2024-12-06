@@ -64,7 +64,7 @@ const StockChart = ({ showNav = true, eggSlug = null }) => {
           <button
             onClick={() => selectedStock !== entry.label ? setSelectedStock(entry.label) : setSelectedStock('')}
             style={{ backgroundColor: entry.color }}
-            className={`${selectedStock === entry.label ? 'text-white' : 'text-green-500'} px-3 py-0.5 rounded-md font-bold`}>
+            className={`${selectedStock === entry.label ? 'text-black' : 'text-green-200'} px-3 py-0.5 rounded-md font-bold`}>
               {entry.label}
           </button>
         </li>
