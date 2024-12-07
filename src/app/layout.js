@@ -18,7 +18,7 @@ const RootLayout = ({ children }) => {
         rel="stylesheet"/>
     </head>
     <body className={`bg-green-300/25 font-serif antialiased max-w-screen max-h-screen`}>
-    {showEgg && <div className="absolute w-screen h-screen overflow-x-hidden overflow-y-hidden z-10 particle-container">
+    {true && <div className="absolute w-screen h-screen overflow-x-hidden overflow-y-hidden z-10 particle-container">
       {[...Array(30)].map((e, i) =>
           <div key={i} className="particles">
             <span className="circle"></span>
